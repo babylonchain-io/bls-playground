@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/bls-playground/utils"
 )
@@ -9,6 +10,8 @@ import (
 func main() {
 	validatorNum := 10
 	msg := []byte("hello BBL")
+
+	fmt.Printf("The experiment is with %d validators to sign '%s'\n", validatorNum, msg)
 
 	sks, pubks := utils.GenerateBatchTestKeyPairs(validatorNum)
 	sigs := utils.SignMsg(sks, msg)
@@ -30,10 +33,12 @@ func main() {
 	}
 	fmt.Printf("The multi-sig is: %x\n", aggSig.Compress())
 
+	startT := time.Now()
 	verified := utils.VerifyMultiSig(aggSig, pubks, msg)
+	endT := time.Now()
 	if verified {
-		fmt.Printf("Verification of the multi-sig success!\n")
+		fmt.Printf("Verification of the multi-sig success! Lasts: %dns\n", endT.Sub(startT).Nanoseconds())
 	} else {
-		fmt.Printf("Verification of the multi-sig failed!\n")
+		fmt.Printf("Verification of the multi-sig failed! Lasts: %dns\n", endT.Sub(startT).Nanoseconds())
 	}
 }

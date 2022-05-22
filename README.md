@@ -35,3 +35,6 @@ If you're cross-compiling, you have to set `CC` environment variable to the targ
 ```
 env GOARCH=arm64 CC=clang CGO_ENABLED=1 go run bls_playground.go
 ```
+
+### Results
+Expected results with `validatorNum=10` is shown in [expected_results.txt](./expected_result.txt).
