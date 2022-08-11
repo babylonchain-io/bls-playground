@@ -1,0 +1,16 @@
+Our benchmark is based on the Go binding of a widely used BLS library called blst(github.com/supranational/blst/bindings/go).
+The benchmark is run at MacBook Pro with 16GB memory and Apple M1 Pro chip.
+We have run benchmark against generating a BLS signature, aggregating a BLS multi-signature from 67 distinct BLS signatures, and verifying a BLS signature (verifying a single signature and a multi-signature with an aggregated public key are no different).
+Each benchmark is run for at least 10s.
+The raw benchmark results are as follows.
+
+goos: darwin
+goarch: arm64
+pkg: github.com/bls-playground/bls
+BenchmarkSignMsg-8          	   84843 times	    143226 ns/op
+BenchmarkAggSig-8           	  264854 times	     41674 ns/op
+BenchmarkVerifyMultiSig-8   	   20529 times	    585594 ns/op
+PASS
+ok  	github.com/bls-playground/bls	43.511s
+
+In summary, generating a BLS signature costs around 0.14ms, aggregating 67 BLS signatures costs around 0.04ms, and verifying a BLS signature costs around 0.59ms.

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/bls-playground/utils"
+	"github.com/bls-playground/bls"
 )
 
 func main() {
@@ -13,10 +13,10 @@ func main() {
 
 	fmt.Printf("The experiment is with %d validators to sign '%s'\n", validatorNum, msg)
 
-	sks, pubks := utils.GenerateBatchTestKeyPairs(validatorNum)
-	sigs := utils.SignMsg(sks, msg)
+	sks, pubks := bls.GenerateBatchTestKeyPairs(validatorNum)
+	sigs := bls.SignMsg(sks, msg)
 
-	aggSig, success := utils.AggSig(sigs)
+	aggSig, success := bls.AggSig(sigs)
 	if !success {
 		fmt.Printf("Aggregation failed")
 	}
@@ -34,7 +34,7 @@ func main() {
 	fmt.Printf("The multi-sig is: %x\n", aggSig.Compress())
 
 	startT := time.Now()
-	verified := utils.VerifyMultiSig(aggSig, pubks, msg)
+	verified := bls.VerifyMultiSig(aggSig, pubks, msg)
 	endT := time.Now()
 	if verified {
 		fmt.Printf("Verification of the multi-sig success! Lasts: %dns\n", endT.Sub(startT).Nanoseconds())
